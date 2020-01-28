@@ -15,7 +15,7 @@ const secureRoutes = [];
 
 secureRoutes.forEach(([method, path]) => app[method](path, secure));
 
-const routes = [];
+const routes = ['post-register'];
 
 routes.forEach(route => require(`./routes/${route}`)(app));
 
