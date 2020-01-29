@@ -23,7 +23,17 @@ describe('POST /login', () => {
 			.expect(400);
 	});
 
-	it('Should work with username', async () => {
+	it('Should not work with unverified users', async () => {
+		await request(app)
+			.post('/login')
+			.send({
+				login: globals.users.user2.email,
+				password: globals.users.user2.password
+			})
+			.expect(400);
+	});
+
+	it('Should work', async () => {
 		await request(app)
 			.post('/login')
 			.send({
@@ -32,16 +42,6 @@ describe('POST /login', () => {
 			})
 			.expect(200);
 
-		await request(app)
-			.post('/login')
-			.send({
-				login: globals.users.user2.username,
-				password: globals.users.user2.password
-			})
-			.expect(200);
-	});
-
-	it('Should work with email', async () => {
 		const res1 = await request(app)
 			.post('/login')
 			.send({
@@ -50,15 +50,6 @@ describe('POST /login', () => {
 			})
 			.expect(200);
 
-		const res2 = await request(app)
-			.post('/login')
-			.send({
-				login: globals.users.user2.email,
-				password: globals.users.user2.password
-			})
-			.expect(200);
-
 		globals.users.user1 = { ...globals.users.user1, ...res1.body };
-		globals.users.user2 = { ...globals.users.user2, ...res2.body };
 	});
 });

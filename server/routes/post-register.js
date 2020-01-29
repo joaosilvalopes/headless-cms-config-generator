@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const postgres = require('../services/postgres');
-const emailService = require('../services/emailService');
+const mail = require('../services/mail');
 const logger = require('../utils/logger');
 const {
 	isValidUsername,
@@ -48,7 +48,7 @@ module.exports = app =>
 				verified: false
 			});
 
-			await emailService.sendVerificationEmail(email, user.token);
+			await mail.sendVerificationEmail(email, user.token);
 
 			await postgres.query('commit');
 

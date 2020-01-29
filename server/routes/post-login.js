@@ -36,6 +36,10 @@ module.exports = app =>
 				return res.status(400).json({ error: "User doesn't exist." });
 			}
 
+			if (!result.rows[0].verified) {
+				return res.status(400).json({ error: 'User not verified.' });
+			}
+
 			if (!(await bcrypt.compare(password, result.rows[0].password))) {
 				return res.status(400).json({ error: 'Wrong password.' });
 			}
