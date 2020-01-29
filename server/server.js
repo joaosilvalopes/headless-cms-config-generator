@@ -3,7 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const secure = require('./middlewares/secure');
-require('dotenv').config({ path: `${__dirname}/.env` });
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 
