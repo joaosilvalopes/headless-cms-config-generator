@@ -12,4 +12,5 @@ describe('Route main test collection', () => {
 	afterAll(closeServer);
 
 	require('./post-register');
+	require('./post-login');
 });
