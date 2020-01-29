@@ -5,8 +5,8 @@
 	"main": "server.js",
 	"scripts": {
 		"start": "nodemon server.js",
-		"db:drop": "node -e 'require(\"./db-scripts\").dropTables();'",
-		"db:create": "node -e 'require(\"./db-scripts\").createTables();'",
+		"db:drop": "node -e 'require(\"./db-scripts\").dropTables().then(process.exit);'",
+		"db:create": "node -e 'require(\"./db-scripts\").createTables().then(process.exit);'",
 		"test": "jest",
 		"test:watch": "jest --watchAll"
 	},
