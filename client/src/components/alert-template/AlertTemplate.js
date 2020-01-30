@@ -1,7 +1,7 @@
 import React from 'react';
 import InfoIcon from 'mdi-material-ui/CheckBold';
 import SuccessIcon from 'mdi-material-ui/CheckBold';
-import ErrorIcon from 'mdi-material-ui/CheckBold';
+import ErrorIcon from 'mdi-material-ui/Alert';
 import CloseIcon from 'mdi-material-ui/Close';
 
 const alertStyle = {
@@ -25,9 +25,15 @@ const buttonStyle = {
 	color: '#FFFFFF'
 };
 
+const bg = {
+	info: '#546e7a',
+	success: '#546e7a',
+	error: '#f50057'
+};
+
 const AlertTemplate = ({ message, options, style, close }) => {
 	return (
-		<div style={{ ...alertStyle, ...style }}>
+		<div style={{ ...alertStyle, ...style, background: bg[options.type] }}>
 			{options.type === 'info' && <InfoIcon />}
 			{options.type === 'success' && <SuccessIcon style={{ color: 'lime' }} />}
 			{options.type === 'error' && <ErrorIcon />}

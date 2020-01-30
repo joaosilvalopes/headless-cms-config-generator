@@ -1,0 +1,30 @@
+import { useEffect } from 'react';
+import sdk from '../../sdk';
+import { useAlert } from 'react-alert';
+
+function VerifyEmail(props) {
+	const alert = useAlert();
+	const verify = async () => {
+		try {
+			const user = await sdk.post('/verify-email', {
+				token: props.match.params.token
+			});
+
+			localStorage.setItem('auth', JSON.stringify(user));
+			props.history.push('/hub');
+
+			alert.success('Account verified successfully');
+		} catch {
+			alert.error('Invalid token');
+			props.history.push('/');
+		}
+	};
+
+	useEffect(() => {
+		verify();
+	}, []);
+
+	return '';
+}
+
+export default VerifyEmail;

@@ -11,5 +11,12 @@ export default createMuiTheme({
 			light: '#819ca9',
 			dark: '#29434e'
 		}
+	},
+	overrides: {
+		MuiFormHelperText: {
+			root: {
+				textAlign: 'right'
+			}
+		}
 	}
 });
