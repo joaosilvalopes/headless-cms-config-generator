@@ -2,10 +2,10 @@ const request = require('supertest');
 const { app } = require('../../server');
 const globals = require('./globals');
 
-describe('POST /register', () => {
+describe('POST /api/register', () => {
 	it('Should fail if password is invalid', async () => {
 		await request(app)
-			.post('/register')
+			.post('/api/register')
 			.send({
 				username: 'firstuser',
 				email: 'firstuser@mail.com',
@@ -16,7 +16,7 @@ describe('POST /register', () => {
 
 	it('Should fail if username is invalid', async () => {
 		await request(app)
-			.post('/register')
+			.post('/api/register')
 			.send({
 				username: 'use',
 				email: 'firstuser@mail.com',
@@ -27,7 +27,7 @@ describe('POST /register', () => {
 
 	it('Should fail if email is invalid', async () => {
 		await request(app)
-			.post('/register')
+			.post('/api/register')
 			.send({
 				username: 'user',
 				email: '',
@@ -50,19 +50,19 @@ describe('POST /register', () => {
 		};
 
 		await request(app)
-			.post('/register')
+			.post('/api/register')
 			.send(globals.users.user1)
 			.expect(200);
 
 		await request(app)
-			.post('/register')
+			.post('/api/register')
 			.send(globals.users.user2)
 			.expect(200);
 	});
 
 	it('Should fail if username is taken', async () => {
 		await request(app)
-			.post('/register')
+			.post('/api/register')
 			.send({
 				username: 'firstuser',
 				email: 'firstusernew@mail.com',
@@ -75,7 +75,7 @@ describe('POST /register', () => {
 
 	it('Should fail if email is taken', async () => {
 		await request(app)
-			.post('/register')
+			.post('/api/register')
 			.send({
 				username: 'firstusernew',
 				email: 'firstuser@mail.com',

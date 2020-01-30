@@ -7,7 +7,17 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const createRouter = app =>
+	['post', 'get', 'delete', 'put'].reduce(
+		(acc, method) => ({
+			...acc,
+			[method]: (url, ...args) => app[method](`/api${url}`, ...args)
+		}),
+		{}
+	);
+
 const app = express();
+const router = createRouter(app);
 
 app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json());
@@ -19,7 +29,7 @@ secureRoutes.forEach(([method, path]) => app[method](path, secure));
 
 const routes = ['post-register', 'post-login', 'post-verify-email'];
 
-routes.forEach(route => require(`./routes/${route}`)(app));
+routes.forEach(route => require(`./routes/${route}`)(router));
 
 const server = app.listen(app.get('port'), 'localhost', () => {
 	console.log(

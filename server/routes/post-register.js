@@ -7,7 +7,7 @@ const {
 	isValidEmail,
 	isValidPassword
 } = require('../utils/validation');
-const { withToken } = require('../utils/authToken');
+const { signToken } = require('../utils/authToken');
 
 const messagePerConstraint = {
 	users_email_key: 'A user with this email is already registered.',
@@ -23,7 +23,7 @@ module.exports = app =>
 			!isValidPassword(password) ||
 			!isValidEmail(email)
 		) {
-			return res.status(400).send();
+			return res.status(400).send({});
 		}
 
 		try {
@@ -42,17 +42,13 @@ module.exports = app =>
 				[username, email, hashedPassword]
 			);
 
-			const user = withToken({
-				email,
-				username,
-				verified: false
-			});
+			const token = signToken({ email, username });
 
-			await mail.sendVerificationEmail(email, user.token);
+			await mail.sendVerificationEmail(email, token);
 
 			await postgres.query('commit');
 
-			return res.json(user);
+			return res.status(200).send({});
 		} catch (error) {
 			await postgres.query('rollback');
 
@@ -63,6 +59,6 @@ module.exports = app =>
 			}
 			console.log(error);
 			logger.log(error);
-			return res.status(400).send();
+			return res.status(400).send({});
 		}
 	});
