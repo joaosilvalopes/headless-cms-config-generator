@@ -71,7 +71,7 @@ const styles = ({ palette: { primary } }) => ({
 		justifyContent: 'center',
 		alignItems: 'center',
 		height: '100%',
-		minHeight: 'inherit',
+		minHeight: '40rem',
 		width: '100%'
 	},
 	shadow: {
