@@ -7,7 +7,7 @@ module.exports = app =>
 		const { token } = req.body;
 
 		try {
-			const { username } = verifyToken(token);
+			const user = verifyToken(token);
 
 			await postgres.query(
 				`
@@ -15,12 +15,12 @@ module.exports = app =>
             set verified = true
             where username = $1
         `,
-				[username]
+				[user.username]
 			);
 
-			res.send();
+			res.send(user);
 		} catch (error) {
 			logger.log(error);
-			res.status(400).send();
+			res.status(400).send({});
 		}
 	});
