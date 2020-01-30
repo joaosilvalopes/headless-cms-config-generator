@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAlert } from 'react-alert';
 import { withStyles } from '@material-ui/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -14,21 +15,20 @@ import sdk from '../../sdk';
 
 const styles = theme => ({
 	dialogActions: {
-		margin: '0.8rem 2.4rem',
-		padding: '0',
+		marginTop: '1rem',
+		padding: 0,
 		display: 'flex',
 		justifyContent: 'space-between',
 		width: '20rem'
 	},
 	dialogTitle: {
 		color: theme.palette.primary.main,
-		paddingBottom: '1rem'
+		marginBottom: '1rem',
+		padding: 0
 	},
 	divider: {
-		margin: '0 2.4rem',
 		marginBottom: '1rem',
-		background: theme.palette.primary.main,
-		height: '0.1rem'
+		background: theme.palette.primary.main
 	},
 	field: {
 		width: '20rem',
@@ -37,12 +37,17 @@ const styles = theme => ({
 	dialogContent: {
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'flex-start'
+		alignItems: 'flex-start',
+		padding: 0,
+		overflowY: 'unset'
 	},
 	dialog: {
 		width: '50%',
 		maxWidth: '40rem',
-		paddingBottom: '1rem'
+		padding: '1.6rem 2.4rem'
+	},
+	button: {
+		width: '9rem'
 	}
 });
 
@@ -56,6 +61,7 @@ const initialValues = {
 function RegisterButton({ classes, ...props }) {
 	const alert = useAlert();
 	const [open, setOpen] = useState(false);
+	const [loading, setLoading] = useState(false);
 	const [values, setValues] = useState(initialValues);
 	const [errors, setErrors] = useState({});
 
@@ -66,7 +72,7 @@ function RegisterButton({ classes, ...props }) {
 		name !== 'confirmPassword' &&
 			setErrors(errors => ({
 				...errors,
-				[name]: !isValid[name](value) ? `Invalid ${name}` : ''
+				[name]: !isValid[name](value) && `Invalid ${name}`
 			}));
 	};
 
@@ -79,27 +85,35 @@ function RegisterButton({ classes, ...props }) {
 	};
 
 	const handleSubmit = async () => {
-		const errors = Object.keys(values).reduce(
-			(errors, name) =>
+		const newErrors = Object.keys(values).reduce(
+			(newErrors, name) =>
 				name !== 'confirmPassword'
 					? {
-							...errors,
-							[name]: !isValid[name](values[name]) ? `Invalid ${name}` : ''
+							...newErrors,
+							[name]:
+								errors[name] ||
+								(!isValid[name](values[name]) && `Invalid ${name}`)
 					  }
-					: errors,
-			{}
+					: {
+							...newErrors,
+							confirmPassword: values.confirmPassword !== values.password
+					  },
+			errors
 		);
 
-		setErrors(errors);
+		setErrors(newErrors);
 
-		if (Object.values(errors).every(e => !e)) {
+		if (Object.values(newErrors).every(e => !e)) {
 			try {
+				setLoading(true);
 				await sdk.post('/register', values);
+				setLoading(false);
 				setOpen(false);
 				alert.success(
 					'A verification email has been sent to your email account'
 				);
 			} catch (e) {
+				setLoading(false);
 				const { error } = e;
 
 				if (error === 'A user with this email is already registered.') {
@@ -129,9 +143,7 @@ function RegisterButton({ classes, ...props }) {
 				classes={{ paperScrollPaper: classes.dialog }}
 				onClose={handleClose}
 			>
-				<DialogTitle id="form-dialog-title" className={classes.dialogTitle}>
-					Register
-				</DialogTitle>
+				<DialogTitle className={classes.dialogTitle}>Register</DialogTitle>
 				<Divider className={classes.divider} />
 				<DialogContent className={classes.dialogContent}>
 					<TextField
@@ -180,11 +192,21 @@ function RegisterButton({ classes, ...props }) {
 					/>
 				</DialogContent>
 				<DialogActions className={classes.dialogActions}>
-					<Button onClick={handleClose} variant="outlined" color="secondary">
+					<Button
+						onClick={handleClose}
+						className={classes.button}
+						variant="outlined"
+						color="secondary"
+					>
 						Cancel
 					</Button>
-					<Button onClick={handleSubmit} variant="outlined" color="primary">
-						Register
+					<Button
+						onClick={handleSubmit}
+						className={classes.button}
+						variant="outlined"
+						color="primary"
+					>
+						{loading ? <CircularProgress size={24} /> : 'Register'}
 					</Button>
 				</DialogActions>
 			</Dialog>
