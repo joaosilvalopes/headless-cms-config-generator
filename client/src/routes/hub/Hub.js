@@ -1,5 +1,6 @@
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import SideMenu from '../../components/side-menu';
 
 function Hub({ history }) {
 	const loggedIn = useSelector(state => state.user.loggedIn);
@@ -10,7 +11,7 @@ function Hub({ history }) {
 		}
 	}, [loggedIn]);
 
-	return 'Logged in';
+	return <SideMenu />;
 }
 
 export default Hub;

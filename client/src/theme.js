@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export default createMuiTheme({
 	headerHeight: '7rem',
+	drawerWidth: '22rem',
 	typography: {
 		htmlFontSize: 10
 	},
