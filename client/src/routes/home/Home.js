@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
+
+import { actions } from '../../redux/redux-user';
 
 import LoginButton from '../../components/login-button';
 import RegisterButton from '../../components/register-button';
@@ -22,8 +25,13 @@ const styles = {
 };
 
 function Home({ classes, history }) {
+	const dispatch = useDispatch();
+
 	useEffect(() => {
-		if (localStorage.getItem('auth')) {
+		const userJSON = localStorage.getItem('auth');
+
+		if (userJSON) {
+			dispatch(actions.login(JSON.parse(userJSON)));
 			history.push('/hub');
 		}
 	}, []);

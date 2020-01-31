@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import Divider from '@material-ui/core/Divider';
@@ -9,6 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import DialogContent from '@material-ui/core/DialogContent';
 import { withStyles } from '@material-ui/core/styles';
 
+import { actions } from '../../redux/redux-user';
 import sdk from '../../sdk';
 import isValid from '../register-button/validations';
 import { useAlert } from 'react-alert';
@@ -52,6 +54,7 @@ const styles = theme => ({
 });
 
 function LoginButton({ classes, onLogin, ...props }) {
+	const dispatch = useDispatch();
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [values, setValues] = useState({});
@@ -107,6 +110,7 @@ function LoginButton({ classes, onLogin, ...props }) {
 				setLoading(false);
 				setOpen(false);
 				localStorage.setItem('auth', JSON.stringify(res));
+				dispatch(actions.login(res));
 				alert.success('Logged in sucessfully');
 				onLogin();
 			} catch ({ error }) {

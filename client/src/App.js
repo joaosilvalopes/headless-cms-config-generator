@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { Provider } from 'react-redux';
 import { Provider as AlertProvider, transitions, positions } from 'react-alert';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +10,7 @@ import AlertTemplate from './components/alert-template';
 import Header from './components/header';
 
 import theme from './theme';
+import store from './redux/store';
 
 const styles = theme => ({
 	main: {
@@ -35,20 +37,22 @@ const routes = ['/verify-email/:token', '/hub/'].map(path => ({
 
 function App({ classes }) {
 	return (
-		<AlertProvider template={AlertTemplate} {...options}>
-			<CssBaseline />
-			<Router>
-				<Header />
-				<main className={classes.main}>
-					<Suspense fallback={null}>
-						<Route exact path="/" component={Home} />
-						{routes.map(props => (
-							<Route key={props.path} {...props} />
-						))}
-					</Suspense>
-				</main>
-			</Router>
-		</AlertProvider>
+		<Provider store={store}>
+			<AlertProvider template={AlertTemplate} {...options}>
+				<CssBaseline />
+				<Router>
+					<Header />
+					<main className={classes.main}>
+						<Suspense fallback={null}>
+							<Route exact path="/" component={Home} />
+							{routes.map(props => (
+								<Route key={props.path} {...props} />
+							))}
+						</Suspense>
+					</main>
+				</Router>
+			</AlertProvider>
+		</Provider>
 	);
 }
 
