@@ -10,8 +10,8 @@ const {
 const { signToken } = require('../utils/authToken');
 
 const messagePerConstraint = {
-	users_email_key: 'A user with this email is already registered.',
-	users_username_key: 'A user with this username is already registered.'
+	user_email_key: 'A user with this email is already registered.',
+	user_username_key: 'A user with this username is already registered.'
 };
 
 module.exports = app =>
@@ -36,7 +36,7 @@ module.exports = app =>
 
 			await postgres.query(
 				`
-            insert into Users(username, email, password)
+            insert into "user"(username, email, password)
             values($1, $2, $3)
         `,
 				[username, email, hashedPassword]

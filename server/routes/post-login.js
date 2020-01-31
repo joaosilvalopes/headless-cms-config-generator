@@ -26,7 +26,7 @@ module.exports = app =>
                 email,
                 password,
                 verified
-            from Users
+            from "user"
             where ${isEmail ? 'email' : 'username'} = $1
         `,
 				[login]

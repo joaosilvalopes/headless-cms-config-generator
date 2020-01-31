@@ -11,7 +11,7 @@ module.exports = app =>
 
 			await postgres.query(
 				`
-            update Users
+            update "user"
             set verified = true
             where username = $1
         `,

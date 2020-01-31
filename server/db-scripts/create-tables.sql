@@ -1,4 +1,4 @@
-create table Users (
+create table "user" (
    id                bigserial      not null,
    username          varchar(255)   not null unique,
    email             varchar(255)   not null unique,
@@ -10,4 +10,4 @@ create table Users (
    primary key(id)
 );
 
-/* create index on Users (username); */
+/* create index on User (username); */
