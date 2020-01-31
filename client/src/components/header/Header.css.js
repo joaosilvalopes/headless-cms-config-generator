@@ -11,5 +11,15 @@ export default theme => ({
 	},
 	icon: {
 		marginRight: '1rem'
+	},
+	logoutButton: {
+		height: '100%',
+		marginLeft: 'auto',
+		color: 'white',
+		textTransform: 'none',
+		padding: '0.6rem 1.8rem'
+	},
+	logoutIcon: {
+		marginLeft: '1rem'
 	}
 });
