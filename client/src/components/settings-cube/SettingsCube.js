@@ -6,6 +6,14 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 const CUBE_SIZE = 15;
 
 const styles = ({ palette: { primary } }) => ({
+	'@keyframes spin2d': {
+		'0%': {
+			transform: 'rotate(0deg)'
+		},
+		'100%': {
+			transform: 'rotate(360deg)'
+		}
+	},
 	'@keyframes spin': {
 		'0%': {
 			transform: 'rotate3d(1,0,0,-20deg) rotateY(0)'
@@ -42,9 +50,14 @@ const styles = ({ palette: { primary } }) => ({
 		transformStyle: 'preserve-3d'
 	},
 	icon: {
+		width: '100%',
+		height: '100%',
+		color: 'white',
+		animation: '$spin2d 2s infinite linear'
+	},
+	iconWrapper: {
 		position: 'absolute',
 		backgroundColor: fade(primary.main, 0.5),
-		color: 'white',
 		width: '100%',
 		height: '100%',
 		'&:nth-child(1)': {
@@ -91,7 +104,9 @@ function SettingsCube({ classes }) {
 			<div className={classes.cubeWrapper}>
 				<div className={classes.cube}>
 					{[...Array(6)].map((_, i) => (
-						<SettingsIcon key={i} className={classes.icon} />
+						<div className={classes.iconWrapper}>
+							<SettingsIcon key={i} className={classes.icon} />
+						</div>
 					))}
 				</div>
 				<div className={classes.shadow} />
