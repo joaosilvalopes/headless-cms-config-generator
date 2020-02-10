@@ -14,4 +14,5 @@ describe('Route main test collection', () => {
 	require('./post-register');
 	require('./post-verify-email');
 	require('./post-login');
+	require('./post-app');
 });

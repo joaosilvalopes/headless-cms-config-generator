@@ -4,10 +4,20 @@ create table "user" (
    email             varchar(255)   not null unique,
    password          varchar(255),
    verified          boolean        not null default false,
-   created_at        timestamp      not null default now(),
-   updated_at        timestamp      not null default now(),
 
    primary key(id)
 );
 
-/* create index on User (username); */
+create index on "user" (username);
+create index on "user" (email);
+
+create table App (
+   id                bigserial      not null,
+   slug              varchar(255)   not null unique,
+   name              varchar(255)   not null unique,
+   connection_string varchar(255)   not null,
+
+   primary key(id)
+);
+
+create index on App (slug);
