@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import ChevronRight from 'mdi-material-ui/ChevronRight';
@@ -9,6 +10,8 @@ import Collapse from '@material-ui/core/Collapse';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { withStyles } from '@material-ui/core';
+
+import AppItem from './AppItem';
 
 const styles = theme => ({
 	listItemIcon: {
@@ -25,7 +28,10 @@ const styles = theme => ({
 		fontWeight: '500'
 	},
 	list: {
-		padding: '0 0 0 5.5rem'
+		padding: '0',
+		'& > *': {
+			paddingLeft: '7rem'
+		}
 	},
 	newAppButton: {
 		borderRadius: '2rem'
@@ -35,6 +41,7 @@ const styles = theme => ({
 function AppOption({ classes }) {
 	const [open, setOpen] = useState(false);
 	const history = useHistory();
+	const apps = useSelector(state => Object.values(state.app));
 
 	return (
 		<>
@@ -50,6 +57,9 @@ function AppOption({ classes }) {
 			</ListItem>
 			<Collapse in={open} unmountOnExit>
 				<List className={classes.list}>
+					{apps.map(app => (
+						<AppItem key={app.name} {...app} />
+					))}
 					<ListItem>
 						<Button
 							className={classes.newAppButton}

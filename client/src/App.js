@@ -27,7 +27,8 @@ const options = {
 	transition: transitions.FADE,
 	containerStyle: {
 		zIndex: 2
-	}
+	},
+	timeout: 5000
 };
 
 const routes = ['/verify-email/:token', '/hub/'].map(path => ({

@@ -8,10 +8,10 @@ const reducer = (state = initialState, action) => {
 		case actionTypes.CREATE:
 			return {
 				...state,
-				[action.payload.slug]: action.payload,
-				loading: false,
-				error: undefined
+				[action.payload.slug]: action.payload
 			};
+		case actionTypes.LOAD:
+			return action.payload;
 		default:
 			return state;
 	}

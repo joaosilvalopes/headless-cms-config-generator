@@ -9,3 +9,12 @@ export const create = payload => async dispatch => {
 		payload
 	});
 };
+
+export const load = () => async dispatch => {
+	const payload = await sdk.get('/app');
+
+	dispatch({
+		type: actionTypes.LOAD,
+		payload
+	});
+};
