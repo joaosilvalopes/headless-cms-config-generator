@@ -1,7 +1,6 @@
 /* eslint-disable global-require */
 const dbUtils = require('../../db-scripts');
 const { closeServer } = require('../../server');
-const pg = require('../../services/postgres');
 
 describe('Route main test collection', () => {
 	beforeAll(async () => {
@@ -15,4 +14,5 @@ describe('Route main test collection', () => {
 	require('./post-verify-email');
 	require('./post-login');
 	require('./post-app');
+	require('./get-app');
 });

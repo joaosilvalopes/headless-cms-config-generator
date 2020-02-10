@@ -16,10 +16,10 @@ module.exports = app =>
 		try {
 			await postgres.query(
 				`
-            insert into App(slug, name, connection_string)
-            values($1, $2, $3)
+            insert into App(slug, name, connection_string, user_id)
+            values($1, $2, $3, $4)
         `,
-				[slug, name, connectionString]
+				[slug, name, connectionString, req.user.id]
 			);
 
 			return res.status(200).send({});

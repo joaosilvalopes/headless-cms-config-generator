@@ -21,7 +21,8 @@ module.exports = app =>
 		try {
 			const result = await postgres.query(
 				`
-            select
+			select
+				id,
                 username,
                 email,
                 password,

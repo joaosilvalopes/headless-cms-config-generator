@@ -23,11 +23,20 @@ app.set('port', process.env.PORT || 5000);
 app.use(bodyParser.json());
 app.use(cors());
 
-const secureRoutes = [];
+const secureRoutes = [
+	['get', '/app'],
+	['post', '/app']
+];
 
-secureRoutes.forEach(([method, path]) => app[method](path, secure));
+secureRoutes.forEach(([method, path]) => router[method](path, secure));
 
-const routes = ['post-register', 'post-login', 'post-verify-email', 'post-app'];
+const routes = [
+	'post-register',
+	'post-login',
+	'post-verify-email',
+	'post-app',
+	'get-app'
+];
 
 routes.forEach(route => require(`./routes/${route}`)(router));
 

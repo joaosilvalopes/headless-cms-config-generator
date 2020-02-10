@@ -15,6 +15,7 @@ module.exports = app =>
             set verified = true
 			where username = $1
 			returning 
+				id,
 				username,
 				email,
 				password,
