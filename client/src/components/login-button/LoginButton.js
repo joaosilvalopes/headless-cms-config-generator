@@ -9,11 +9,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import TextField from '@material-ui/core/TextField';
 import DialogContent from '@material-ui/core/DialogContent';
 import { withStyles } from '@material-ui/core/styles';
+import { useAlert } from 'react-alert';
 
 import { actions } from '../../redux/redux-user';
 import sdk from '../../sdk';
 import isValid from '../register-button/validations';
-import { useAlert } from 'react-alert';
 
 const styles = theme => ({
 	dialogTitle: {

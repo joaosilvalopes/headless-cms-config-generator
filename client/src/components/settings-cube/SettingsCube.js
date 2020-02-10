@@ -104,8 +104,8 @@ function SettingsCube({ classes }) {
 			<div className={classes.cubeWrapper}>
 				<div className={classes.cube}>
 					{[...Array(6)].map((_, i) => (
-						<div className={classes.iconWrapper}>
-							<SettingsIcon key={i} className={classes.icon} />
+						<div key={i} className={classes.iconWrapper}>
+							<SettingsIcon className={classes.icon} />
 						</div>
 					))}
 				</div>

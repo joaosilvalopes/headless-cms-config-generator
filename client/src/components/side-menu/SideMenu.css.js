@@ -4,6 +4,7 @@ export default ({ drawerWidth, headerHeight, palette }) => ({
 	},
 	drawerPaper: {
 		marginTop: headerHeight,
-		width: drawerWidth
+		width: drawerWidth,
+		zIndex: '1'
 	}
 });

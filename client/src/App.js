@@ -25,7 +25,9 @@ const styles = theme => ({
 const options = {
 	position: positions.BOTTOM_CENTER,
 	transition: transitions.FADE,
-	timeout: 5000
+	containerStyle: {
+		zIndex: 2
+	}
 };
 
 const routes = ['/verify-email/:token', '/hub/'].map(path => ({
